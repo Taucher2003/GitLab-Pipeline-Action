@@ -1,0 +1,23 @@
+AllCops:
+  NewCops: enable
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Naming/BlockForwarding:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma

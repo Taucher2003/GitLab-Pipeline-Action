@@ -1,0 +1,18 @@
+name: 'GitLab Pipeline Action'
+description: 'Run a GitLab pipeline from within GitHub actions'
+inputs:
+  GL_SERVER_URL:
+    description: 'Host of the GitLab server'
+    required: true
+    default: 'https://gitlab.com'
+  GL_PROJECT_ID:
+    description: 'ID of the GitLab project'
+    required: true
+  GL_RUNNER_TOKEN:
+    description: 'A runner token, if a runner should be started in this action'
+  GL_API_TOKEN:
+    description: 'A token to check the pipeline status with. Required if the project is private'
+author: 'Taucher2003'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
