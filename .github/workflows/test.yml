@@ -1,0 +1,24 @@
+name: Run Integration test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up -d
+        working-directory: test
+      - run: test/await_healthy.sh
+      - uses: ./
+        name: Run test
+        with:
+          GL_SERVER_URL: http://127.0.0.1:8080
+          GL_PROJECT_ID: '1000'
+          GL_RUNNER_TOKEN: some_long_runner_token
+          GL_API_TOKEN: TEST1234567890123456
+      - run: docker compose down
+        working-directory: test

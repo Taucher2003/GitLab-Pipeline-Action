@@ -1,0 +1,19 @@
+services:
+  gitlab-ce:
+    image: gitlab/gitlab-ce:${GITLAB_CE_VERSION:-latest}
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      GITLAB_ROOT_PASSWORD: routrout
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://127.0.0.1:8080'
+        nginx[:listen_port] = 80
+    labels:
+      gitlab-pipeline-action/owned: ''
+    volumes:
+      - ./healthcheck_and_setup.sh:/healthcheck_and_setup.sh:Z
+    healthcheck:
+      test: /healthcheck_and_setup.sh
+      interval: 10s
+      timeout: 3m
