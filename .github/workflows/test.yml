@@ -16,7 +16,7 @@ jobs:
       - uses: ./
         name: Run test
         with:
-          GL_SERVER_URL: http://127.0.0.1:8080
+          GL_SERVER_URL: http://172.17.0.1:8080
           GL_PROJECT_ID: '1000'
           GL_RUNNER_TOKEN: some_long_runner_token
           GL_API_TOKEN: TEST1234567890123456

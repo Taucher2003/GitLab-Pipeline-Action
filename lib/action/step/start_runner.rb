@@ -13,7 +13,6 @@ module GitlabPipelineAction
             'Binds' => [
               '/var/run/docker.sock:/var/run/docker.sock:ro'
             ],
-            'NetworkMode' => 'host'
           }
         )
 
