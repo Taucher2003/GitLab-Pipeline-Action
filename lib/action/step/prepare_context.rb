@@ -6,7 +6,8 @@ module GitlabPipelineAction
       def execute
         context.gh_project = ENV.fetch('GITHUB_REPOSITORY', nil)
         context.gh_sha = ENV.fetch('GITHUB_SHA', nil)
-        context.gh_ref = ENV.fetch('GITHUB_REF_NAME', nil)
+        context.gh_ref = ENV.fetch('GITHUB_REF', nil)
+        context.gh_ref_name = ENV.fetch('GITHUB_REF_NAME', nil)
         context.gh_server_url = ENV.fetch('GITHUB_SERVER_URL', nil)
 
         context.gl_server_url = ENV.fetch('INPUT_GL_SERVER_URL', nil)
