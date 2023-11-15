@@ -1,0 +1,3 @@
+job:
+  script:
+    - echo $CI_COMMIT_SHA

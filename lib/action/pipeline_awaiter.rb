@@ -26,6 +26,7 @@ module GitlabPipelineAction
           puts "Pipeline succeeded in #{duration} minutes!"
           return
         else
+          puts
           puts "Pipeline #{status} in #{duration} minutes!"
           raise PipelineFailed, 'Pipeline did not succeed!'
         end
