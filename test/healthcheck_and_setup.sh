@@ -36,6 +36,7 @@ test -f $done || {
     printf 'namespace_id: User.first.namespace.id,'
     printf 'name: "Test",'
     printf 'path: "test",'
+    printf 'ci_config_path: "test/.gitlab-ci.yml",'
     printf 'id: 1000,'
     printf 'import_type: "git",'
     printf 'import_url: "https://github.com/Taucher2003/Gitlab-Pipeline-Action.git"'
