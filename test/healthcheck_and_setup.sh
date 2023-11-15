@@ -32,11 +32,10 @@ test -f $done || {
     printf 'settings.import_sources << "git";'
     printf 'settings.save!;'
 
-    printf 'Projects::CreateService.new(User.find(1), {'
+    printf 'project = Projects::CreateService.new(User.find(1), {'
     printf 'namespace_id: User.first.namespace.id,'
     printf 'name: "Test",'
     printf 'path: "test",'
-    printf 'default_branch: "testing-project-default-branch",'
     printf 'ci_config_path: "test/.gitlab-ci.yml",'
     printf 'id: 1000,'
     printf 'import_type: "git",'
@@ -56,6 +55,13 @@ test -f $done || {
     printf 'current_user: User.first,'
     printf 'params: { action: :create, variable_params: { key: "GIT_STRATEGY", value: "none", protected: false } }'
     printf ').execute;'
+
+    printf 'while project.reload.import_status != "finished"; sleep 5; end;'
+    printf 'Projects::UpdateService.new('
+    printf 'project,'
+    printf 'Users::Internal.admin_bot,'
+    printf 'default_branch: "testing-project-default-branch"'
+    printf ').execute'
   ) | gitlab-rails console
 
   touch $done
