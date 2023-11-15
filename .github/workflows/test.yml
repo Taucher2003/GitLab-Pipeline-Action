@@ -7,10 +7,16 @@ on:
 jobs:
   integration-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        gitlab_version:
+          - 16.5.2-ce.0
+          - 16.4.2-ee.0
+          - 16.3.6-ce.0
 
     steps:
       - uses: actions/checkout@v4
-      - run: docker compose up -d
+      - run: GITLAB_CE_VERSION=${{ matrix.gitlab_version }} docker compose up -d
         working-directory: test
       - run: test/await_healthy.sh
       - uses: ./
