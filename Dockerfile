@@ -1,4 +1,4 @@
-FROM ruby:3.2.0-bullseye
+FROM ruby:3.2.2-bullseye
 
 WORKDIR /gitlab_pipeline_action
 COPY Gemfile Gemfile.lock ./
