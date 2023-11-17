@@ -27,8 +27,6 @@ This action takes care of the following things:
 
 Create a workflow with the following content.
 
-Replace `<version>` with the release you want to use.
-
 Replace `<project-id>` with the ID of the project you created in step one.
 The snippet assumes that the secret from step 2 and 3 were created with the name `GL_API_TOKEN` and `GL_RUNNER_TOKEN`.
 
