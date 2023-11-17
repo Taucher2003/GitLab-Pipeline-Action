@@ -17,3 +17,6 @@ author: 'Taucher2003'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+branding:
+  icon: check-circle
+  color: orange
