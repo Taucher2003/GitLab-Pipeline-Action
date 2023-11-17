@@ -12,6 +12,7 @@ inputs:
     description: 'A runner token, if a runner should be started in this action'
   GL_API_TOKEN:
     description: 'A token to check the pipeline status with. Required if the project is private'
+    required: true
 author: 'Taucher2003'
 runs:
   using: 'docker'

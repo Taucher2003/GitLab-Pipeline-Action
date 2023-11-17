@@ -1,4 +1,4 @@
-name: Run Integration test
+name: Run Tests
 
 on:
   push:
@@ -32,3 +32,12 @@ jobs:
       - run: docker compose down
         if: always()
         working-directory: test
+
+  rubocop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+      - run: bundle install
+      - run: bundle exec rubocop
