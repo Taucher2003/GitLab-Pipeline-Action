@@ -23,13 +23,3 @@ echo "GitLab is healthy at $GITLAB_BASE_URL"
 curl --silent --show-error --header "Private-Token: TEST1234567890123456" "$GITLAB_BASE_URL/api/v4/version"
 
 echo
-printf 'Waiting for Test project to be imported'
-
-import_status=""
-while [[ "$import_status" != "finished" ]]; do
-  printf '.'
-  import_status=$(curl --silent --show-error --header "Private-Token: TEST1234567890123456" "$GITLAB_BASE_URL/api/v4/projects/1000" | jq -r .import_status)
-  sleep 5
-done
-
-echo

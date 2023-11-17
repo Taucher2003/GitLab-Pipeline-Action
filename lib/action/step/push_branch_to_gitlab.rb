@@ -5,7 +5,7 @@ module GitlabPipelineAction
     class PushBranchToGitlab < Base
       def execute
         context.git_repository.add_remote(GITLAB_REMOTE, gitlab_remote_url)
-        context.git_repository.push(GITLAB_REMOTE, context.gh_ref_name, push_option: ['ci.skip'])
+        context.git_repository.push(GITLAB_REMOTE, context.gl_branch_name, push_option: ['ci.skip'])
       end
 
       private

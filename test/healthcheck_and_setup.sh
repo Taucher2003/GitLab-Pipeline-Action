@@ -57,11 +57,6 @@ test -f $done || {
     printf ').execute;'
 
     printf 'while project.reload.import_status != "finished"; sleep 5; end;'
-    printf 'Projects::UpdateService.new('
-    printf 'project,'
-    printf 'Users::Internal.admin_bot,'
-    printf 'default_branch: "testing-project-default-branch"'
-    printf ').execute'
   ) | gitlab-rails console
 
   touch $done
