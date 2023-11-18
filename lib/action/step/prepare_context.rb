@@ -15,6 +15,8 @@ module GitlabPipelineAction
         context.gl_project_id = ENV.fetch('INPUT_GL_PROJECT_ID', nil)
         context.gl_runner_token = ENV.fetch('INPUT_GL_RUNNER_TOKEN', nil)
         context.gl_api_token = ENV.fetch('INPUT_GL_API_TOKEN', nil)
+        context.gl_pipeline_variables = ENV.select { |key| key.start_with?('GLPA_') }
+                                           .transform_keys { |key| key.delete_prefix('GLPA_') }
 
         context.git_path = "/tmp/repo/#{SecureRandom.hex}"
 

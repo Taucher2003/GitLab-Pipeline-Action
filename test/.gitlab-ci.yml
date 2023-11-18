@@ -1,3 +1,4 @@
 job:
   script:
     - echo $CI_COMMIT_SHA
+    - echo $SOME_VARIABLE
