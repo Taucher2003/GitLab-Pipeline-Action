@@ -3,6 +3,11 @@
 
 version = ARGV.shift
 
+if version.nil?
+  puts 'No version provided'
+  return
+end
+
 readme = File.read 'README.md'
 readme_for_version = readme.gsub('Taucher2003/GitLab-Pipeline-Action@<version>',
                                  "Taucher2003/GitLab-Pipeline-Action@#{version}")
