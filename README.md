@@ -52,6 +52,44 @@ jobs:
           GL_API_TOKEN: ${{ secrets.GL_API_TOKEN }}
 ```
 
+## Pass variables to the GitLab Pipeline
+
+You can define variables that should be passed to the GitLab pipeline.
+
+Every environment variable starting with `GLPA_` will be passed to the GitLab pipeline
+with the `GLPA_` prefix removed.
+
+<details>
+<summary>Example with variable</summary>
+
+With this setup, the `GITHUB_TOKEN` is available in the GitLab pipeline.
+It is accessible in the GitLab pipeline with `$GITHUB_TOKEN`, because the `GLPA_`
+prefix is stripped before passing it to GitLab.
+
+```yaml
+name: GitLab
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Taucher2003/GitLab-Pipeline-Action@<version>
+        name: Run pipeline
+        with:
+          GL_SERVER_URL: https://gitlab.com
+          GL_PROJECT_ID: '<project-id>'
+          GL_RUNNER_TOKEN: ${{ secrets.GL_RUNNER_TOKEN }}
+          GL_API_TOKEN: ${{ secrets.GL_API_TOKEN }}
+        env:
+          GLPA_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+</details>
+
 ## Known issues
 
 GitHub does not pass secrets to actions triggered by pull requests from forks.
