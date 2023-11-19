@@ -5,6 +5,8 @@ require 'git'
 require 'securerandom'
 require 'docker'
 
+require 'action/helper/github'
+
 require 'action/step/base'
 require 'action/step/clone_project'
 require 'action/step/fetch_data'
@@ -15,6 +17,7 @@ require 'action/step/start_runner'
 require 'action/step/wait_for_pipeline'
 require 'action/step/stop_runner'
 require 'action/step/remove_branch_from_gitlab'
+require 'action/step/show_job_logs'
 
 require 'action/context'
 require 'action/pipeline_awaiter'

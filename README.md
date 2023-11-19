@@ -90,6 +90,16 @@ jobs:
 
 </details>
 
+## Show job logs
+
+By adding the `SHOW_JOB_LOGS` to the input section (`with`), you can show the job logs
+from the GitLab pipeline in the output of the GitHub Action Run.
+
+Available options are `none`, `failures` and `all`. \
+When using `none` or not specifying the option, no job logs will be shown. \
+With `failures`, the job logs of failed jobs will be shown. \
+`all` shows the job log of all jobs in the pipeline.
+
 ## Known issues
 
 GitHub does not pass secrets to actions triggered by pull requests from forks.

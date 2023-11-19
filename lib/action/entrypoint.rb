@@ -11,7 +11,8 @@ module GitlabPipelineAction
       GitlabPipelineAction::Step::StartRunner,
       GitlabPipelineAction::Step::WaitForPipeline,
       GitlabPipelineAction::Step::StopRunner,
-      GitlabPipelineAction::Step::RemoveBranchFromGitlab
+      GitlabPipelineAction::Step::RemoveBranchFromGitlab,
+      GitlabPipelineAction::Step::ShowJobLogs
     ].freeze
 
     def execute
