@@ -27,6 +27,7 @@ jobs:
           GL_PROJECT_ID: '1000'
           GL_RUNNER_TOKEN: some_long_runner_token
           GL_API_TOKEN: TEST1234567890123456
+          SHOW_JOB_LOGS: all
         env:
           GLPA_SOME_VARIABLE: some value for the variable
       - run: 'curl --silent --header "Private-Token: TEST1234567890123456" "http://127.17.0.1:8080/api/v4/projects/1000/jobs/1/trace"'

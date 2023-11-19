@@ -2,3 +2,12 @@ job:
   script:
     - echo $CI_COMMIT_SHA
     - echo $SOME_VARIABLE
+
+job-with-commands:
+  script:
+    - echo "::notice::Some output"
+
+failing-job:
+  allow_failure: true
+  script:
+    - exit 1

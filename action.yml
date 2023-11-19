@@ -13,6 +13,9 @@ inputs:
   GL_API_TOKEN:
     description: 'A token to check the pipeline status with. Required if the project is private'
     required: true
+  SHOW_JOB_LOGS:
+    description: 'Set if the job log should be shown in the action output'
+    default: 'none'
 author: 'Taucher2003'
 runs:
   using: 'docker'

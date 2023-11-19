@@ -14,6 +14,10 @@ module GitlabPipelineAction
       def skip?
         false
       end
+
+      def github
+        GitlabPipelineAction::Helper::Github
+      end
     end
   end
 end

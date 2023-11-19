@@ -18,6 +18,8 @@ module GitlabPipelineAction
         context.gl_pipeline_variables = ENV.select { |key| key.start_with?('GLPA_') }
                                            .transform_keys { |key| key.delete_prefix('GLPA_') }
 
+        context.gl_show_job_logs = ENV.fetch('INPUT_SHOW_JOB_LOGS', nil)&.to_sym
+
         context.git_path = "/tmp/repo/#{SecureRandom.hex}"
 
         config = {}
