@@ -1,3 +1,6 @@
+require:
+  - rubocop-rspec
+
 AllCops:
   NewCops: enable
 
@@ -11,6 +14,17 @@ Naming/BlockForwarding:
   Enabled: false
 
 Naming/MethodParameterName:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+# the action folder does not match gitlab_pipeline_action
+RSpec/FilePath:
+  Enabled: false
+
+# the action folder does not match gitlab_pipeline_action
+RSpec/SpecFilePathFormat:
   Enabled: false
 
 Style/Documentation:

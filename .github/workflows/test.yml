@@ -21,7 +21,7 @@ jobs:
         working-directory: test
       - run: test/await_healthy.sh
       - uses: ./
-        name: Run test
+        name: Run smoke-test (running the action)
         with:
           GL_SERVER_URL: http://172.17.0.1:8080
           GL_PROJECT_ID: '1000'
@@ -32,6 +32,12 @@ jobs:
           GLPA_SOME_VARIABLE: some value for the variable
       - run: 'curl --silent --header "Private-Token: TEST1234567890123456" "http://127.17.0.1:8080/api/v4/projects/1000/jobs/1/trace"'
         if: always()
+      - uses: ruby/setup-ruby@v1
+      - run: bundle install
+      - run: bundle exec rspec
+        name: Run tests (running rspec)
+        env:
+          GITLAB_BASE_URL_FOR_RUNNER: http://172.17.0.1:8080
       - run: docker compose down
         if: always()
         working-directory: test

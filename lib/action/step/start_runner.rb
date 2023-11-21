@@ -20,7 +20,7 @@ module GitlabPipelineAction
         container.exec([
                          'gitlab-runner', 'register',
                          '--non-interactive',
-                         '--url', context.gl_server_url,
+                         '--url', context.gl_server_url_for_runner,
                          '--token', context.gl_runner_token,
                          '--executor', 'docker',
                          '--docker-image', 'alpine:latest'

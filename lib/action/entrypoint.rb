@@ -15,8 +15,7 @@ module GitlabPipelineAction
       GitlabPipelineAction::Step::ShowJobLogs
     ].freeze
 
-    def execute
-      context = Context.new
+    def execute(context = Context.new)
       STEPS.each do |step_class|
         step = step_class.new(context)
         print "#{step_class}: "
