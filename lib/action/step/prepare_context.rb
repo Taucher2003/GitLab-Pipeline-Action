@@ -12,6 +12,10 @@ module GitlabPipelineAction
         context.gl_branch_name = "glpa/#{ENV.fetch('GITHUB_REF_NAME', nil)}"
 
         context.gl_server_url = ENV.fetch('INPUT_GL_SERVER_URL', nil)
+        context.gl_server_url_for_runner = ENV.fetch(
+          'INPUT_GL_SERVER_URL_FOR_RUNNER', # intentionally undocumented
+          context.gl_server_url
+        )
         context.gl_project_id = ENV.fetch('INPUT_GL_PROJECT_ID', nil)
         context.gl_runner_token = ENV.fetch('INPUT_GL_RUNNER_TOKEN', nil)
         context.gl_api_token = ENV.fetch('INPUT_GL_API_TOKEN', nil)
