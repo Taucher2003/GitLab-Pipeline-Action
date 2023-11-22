@@ -105,4 +105,36 @@ With `failures`, the job logs of failed jobs will be shown. \
 GitHub does not pass secrets to actions triggered by pull requests from forks.
 This causes the `GL_API_TOKEN` and `GL_RUNNER_TOKEN` to be empty when triggered from a fork.
 
-The action will fail in this case as the `GL_API_TOKEN` is required.
+You can work around that by using the `pull_request_target` trigger. Because this triggers
+the workflow against the base branch instead of the head branch, you need to set overrides
+for the action to checkout the code from the PR instead of the base branch.
+
+Before adopting this solution, think about the security implications. You can read more about
+them in the [GitHub documentation](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target).
+
+If the GitLab project contains CI/CD variables, they can be extracted from an external
+contributor by just opening a PR on GitHub.
+
+You can work around that with an environment that requires a review to deploy. That will
+hold the job until it is approved by a repository collaborator.
+
+```yml
+name: GitLab
+
+on:
+   pull_request_target:
+
+jobs:
+   pipeline:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: Taucher2003/GitLab-Pipeline-Action@<version>
+           name: Run pipeline
+           with:
+              GL_SERVER_URL: https://gitlab.com
+              GL_PROJECT_ID: '<project-id>'
+              GL_RUNNER_TOKEN: ${{ secrets.GL_RUNNER_TOKEN }}
+              GL_API_TOKEN: ${{ secrets.GL_API_TOKEN }}
+              OVERRIDE_GITHUB_SHA: ${{ github.event.pull_request.head.sha }}
+              OVERRIDE_GITHUB_REF_NAME: ${{ github.event.pull_request.head.ref }}
+```
