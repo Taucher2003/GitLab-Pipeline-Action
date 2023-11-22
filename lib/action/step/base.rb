@@ -18,6 +18,10 @@ module GitlabPipelineAction
       def github
         GitlabPipelineAction::Helper::Github
       end
+
+      def env
+        GitlabPipelineAction::Helper::Env
+      end
     end
   end
 end
