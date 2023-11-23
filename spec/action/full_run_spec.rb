@@ -50,4 +50,19 @@ RSpec.describe 'Full run', :require_gitlab do # rubocop:disable RSpec/DescribeCl
       ).to_stdout
     end
   end
+
+  it 'creates the summary', :disable_console do
+    execute
+
+    expect(File.read(context.gh_step_summary_path)).to include(
+      '# GitLab Pipeline Action',
+      '## General information',
+      "Link to pipeline: #{context.gl_pipeline.web_url}",
+      "Status: #{context.gl_pipeline.detailed_status.text} \\",
+      '## Job summaries',
+      'job-with-summary',
+      "This line should be part of the summary\n" \
+      'this one as well'
+    )
+  end
 end

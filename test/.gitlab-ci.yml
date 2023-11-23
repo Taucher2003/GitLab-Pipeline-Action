@@ -11,3 +11,13 @@ failing-job:
   allow_failure: true
   script:
     - exit 1
+
+job-with-summary:
+  script:
+    - |
+      echo 'this line should not be part of the summary'
+      echo -e "\e[0Ksection_start:`date +%s`:glpa_summary\r\e[0KHeader of the section"
+      echo 'This line should be part of the summary'
+      echo 'this one as well'
+      echo -e "\e[0Ksection_end:`date +%s`:glpa_summary\r\e[0K"
+      echo 'this one not'
