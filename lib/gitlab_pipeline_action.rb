@@ -5,6 +5,7 @@ require 'git'
 require 'securerandom'
 require 'docker'
 
+require 'action/helper/env'
 require 'action/helper/github'
 
 require 'action/step/base'

@@ -11,11 +11,19 @@ inputs:
   GL_RUNNER_TOKEN:
     description: 'A runner token, if a runner should be started in this action'
   GL_API_TOKEN:
-    description: 'A token to check the pipeline status with. Required if the project is private'
+    description: 'A token to check the pipeline status with'
     required: true
   SHOW_JOB_LOGS:
     description: 'Set if the job log should be shown in the action output'
     default: 'none'
+
+  # Overrides of default variables
+  OVERRIDE_GITHUB_SHA:
+    description: 'Override the git sha given from GitHub'
+  OVERRIDE_GITHUB_REF:
+    description: 'Override the git ref given from GitHub. Should be in format "refs/<type>/<name>"'
+  OVERRIDE_GITHUB_REF_NAME:
+    description: 'Override the git ref name given from GitHub'
 author: 'Taucher2003'
 runs:
   using: 'docker'
