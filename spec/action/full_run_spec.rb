@@ -65,4 +65,12 @@ RSpec.describe 'Full run', :require_gitlab do # rubocop:disable RSpec/DescribeCl
       'this one as well'
     )
   end
+
+  it 'creates the output', :disable_console do
+    execute
+
+    expect(File.read(context.gh_step_output_path)).to match(
+      %r{^SUMMARY_TEXT<<(.+)\n[\s\S]+/pipelines/(\d+)\n[\s\S]+\1\nPIPELINE_ID=\2$}
+    )
+  end
 end

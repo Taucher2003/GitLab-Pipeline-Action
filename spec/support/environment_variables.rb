@@ -10,6 +10,7 @@ RSpec.configure do
   ENV['GITHUB_REF_NAME'] = 'master'
   ENV['GITHUB_SERVER_URL'] = 'https://github.com'
   ENV['GITHUB_STEP_SUMMARY'] = "#{tmp_dir}/step_summary"
+  ENV['GITHUB_OUTPUT'] = "#{tmp_dir}/step_output"
 
   ENV['INPUT_GL_SERVER_URL'] = ENV.fetch('GITLAB_BASE_URL', 'http://127.0.0.1:8080')
   ENV['INPUT_GL_SERVER_URL_FOR_RUNNER'] = ENV.fetch('GITLAB_BASE_URL_FOR_RUNNER', ENV.fetch('INPUT_GL_SERVER_URL', nil))
