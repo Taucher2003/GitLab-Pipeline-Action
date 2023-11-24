@@ -19,6 +19,7 @@ require 'action/step/wait_for_pipeline'
 require 'action/step/stop_runner'
 require 'action/step/remove_branch_from_gitlab'
 require 'action/step/show_job_logs'
+require 'action/step/create_summary'
 
 require 'action/context'
 require 'action/pipeline_awaiter'
