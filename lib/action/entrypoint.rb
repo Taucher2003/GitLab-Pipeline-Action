@@ -13,7 +13,8 @@ module GitlabPipelineAction
       GitlabPipelineAction::Step::StopRunner,
       GitlabPipelineAction::Step::RemoveBranchFromGitlab,
       GitlabPipelineAction::Step::ShowJobLogs,
-      GitlabPipelineAction::Step::CreateSummary
+      GitlabPipelineAction::Step::CreateSummary,
+      GitlabPipelineAction::Step::CreateOutput
     ].freeze
 
     def execute(context = Context.new)

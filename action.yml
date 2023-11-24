@@ -24,6 +24,11 @@ inputs:
     description: 'Override the git ref given from GitHub. Should be in format "refs/<type>/<name>"'
   OVERRIDE_GITHUB_REF_NAME:
     description: 'Override the git ref name given from GitHub'
+outputs:
+  SUMMARY_TEXT:
+    description: 'Markdown content of the action summary'
+  PIPELINE_ID:
+    description: 'ID of the triggered pipeline on GitLab'
 author: 'Taucher2003'
 runs:
   using: 'docker'
