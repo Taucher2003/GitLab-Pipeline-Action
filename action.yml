@@ -32,7 +32,7 @@ outputs:
 author: 'Taucher2003'
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/taucher2003/gitlab-pipeline-action:1.2.0'
+  image: 'Dockerfile'
 branding:
   icon: check-circle
   color: orange
