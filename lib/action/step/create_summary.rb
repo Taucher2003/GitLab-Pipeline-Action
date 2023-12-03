@@ -34,6 +34,8 @@ module GitlabPipelineAction
 
       def format_time
         duration = context.gl_pipeline.duration
+        return 0 if duration.nil?
+
         if duration < 60
           "#{duration} seconds"
         else
