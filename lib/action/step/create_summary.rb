@@ -57,6 +57,8 @@ module GitlabPipelineAction
       end
 
       def extract_summary(trace)
+        return if trace.nil?
+
         lines_after_summary_start = trace.lines.map(&:strip).drop_while do |line|
           line !~ /^\e\[0Ksection_start:\d+:glpa_summary/
         end.drop(1)

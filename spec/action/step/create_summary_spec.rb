@@ -67,4 +67,14 @@ RSpec.describe GitlabPipelineAction::Step::CreateSummary do
       expect(create_summary).not_to include('Job summaries')
     end
   end
+
+  context 'when no jobs have a trace' do
+    before do
+      allow(gitlab_client).to receive(:job_trace).and_return(nil)
+    end
+
+    it 'does not include the job summary header' do
+      expect(create_summary).not_to include('Job summaries')
+    end
+  end
 end
