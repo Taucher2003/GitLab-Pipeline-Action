@@ -13,7 +13,7 @@ RSpec.describe GitlabPipelineAction::Step::PrepareContext do
   it 'takes data from default variables', :aggregate_failures do
     expect(context.gh_sha).to eq(ENV.fetch('GITHUB_SHA', 'master'))
     expect(context.gh_ref).to eq(ENV.fetch('GITHUB_REF', 'refs/heads/master'))
-    expect(context.gl_branch_name).to eq('glpa/master')
+    expect(context.gl_branch_name).to eq("glpa/master/#{ENV.fetch('GITHUB_SHA', 'master')}")
   end
 
   context 'when ref variables are overridden' do
@@ -24,7 +24,7 @@ RSpec.describe GitlabPipelineAction::Step::PrepareContext do
     it 'takes data from the override', :aggregate_failures do
       expect(context.gh_sha).to eq('123')
       expect(context.gh_ref).to eq('refs/heads/blub')
-      expect(context.gl_branch_name).to eq('glpa/blub')
+      expect(context.gl_branch_name).to eq('glpa/blub/123')
     end
   end
 end

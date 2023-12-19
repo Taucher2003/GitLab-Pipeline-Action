@@ -11,7 +11,8 @@ module GitlabPipelineAction
         context.gh_step_summary_path = env.fetch('GITHUB_STEP_SUMMARY')
         context.gh_step_output_path = env.fetch('GITHUB_OUTPUT')
 
-        context.gl_branch_name = "glpa/#{env.fetch('INPUT_OVERRIDE_GITHUB_REF_NAME', 'GITHUB_REF_NAME')}"
+        context.gl_branch_name =
+          "glpa/#{env.fetch('INPUT_OVERRIDE_GITHUB_REF_NAME', 'GITHUB_REF_NAME')}/#{context.gh_sha}"
 
         context.gl_server_url = env.fetch('INPUT_GL_SERVER_URL')
         context.gl_server_url_for_runner = env.fetch(
