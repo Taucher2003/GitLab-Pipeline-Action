@@ -15,7 +15,8 @@ module GitlabPipelineAction
           )
           puts "Triggered: #{context.gl_pipeline.web_url}"
           return # rubocop:disable Lint/NonLocalExitFromIterator -- this is intended
-        rescue Gitlab::Error::BadRequest
+        rescue Gitlab::Error::BadRequest => e
+          puts e.full_message(order: :top)
           puts "Trigger failed, #{MAX_TRIGGER_RETRIES - iteration - 1} retries remaining"
           sleep 1
         end
