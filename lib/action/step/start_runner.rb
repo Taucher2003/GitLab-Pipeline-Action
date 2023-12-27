@@ -3,7 +3,7 @@
 module GitlabPipelineAction
   module Step
     class StartRunner < Base
-      GITLAB_RUNNER_IMAGE = 'gitlab/gitlab-runner:v16.5.0'
+      GITLAB_RUNNER_IMAGE = 'gitlab/gitlab-runner:v16.7.0'
 
       def execute
         Docker::Image.create('fromImage' => GITLAB_RUNNER_IMAGE)
