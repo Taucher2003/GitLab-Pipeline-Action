@@ -6,12 +6,15 @@ module GitlabPipelineAction
       GITLAB_RUNNER_IMAGE = 'gitlab/gitlab-runner:v16.7.0'
 
       def execute
+        runner_config_template_path = "#{File.expand_path('../config', __dir__)}/gitlab_runner_config_template.toml"
+
         Docker::Image.create('fromImage' => GITLAB_RUNNER_IMAGE)
         container = Docker::Container.create(
           'Image' => GITLAB_RUNNER_IMAGE,
           'HostConfig' => {
             'Binds' => [
-              '/var/run/docker.sock:/var/run/docker.sock:ro'
+              '/var/run/docker.sock:/var/run/docker.sock:ro',
+              "#{runner_config_template_path}:/tmp/runner_config_template.toml:ro"
             ],
           }
         )
@@ -20,6 +23,7 @@ module GitlabPipelineAction
         container.exec([
                          'gitlab-runner', 'register',
                          '--non-interactive',
+                         '--template-config', '/tmp/runner_config_template.toml',
                          '--url', context.gl_server_url_for_runner,
                          '--token', context.gl_runner_token,
                          '--executor', 'docker',
