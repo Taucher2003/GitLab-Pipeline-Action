@@ -1,3 +1,4 @@
 [[runners]]
     [runners.docker]
         privileged = true
+        volumes = ["/cache", "/certs/client"]
