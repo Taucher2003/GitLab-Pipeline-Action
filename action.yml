@@ -17,6 +17,10 @@ inputs:
     description: 'Set if the job log should be shown in the action output'
     default: 'none'
 
+  TASK:
+    description: 'Specify the task to run'
+    default: 'gitlab_pipeline_action'
+
   # Overrides of default variables
   OVERRIDE_GITHUB_SHA:
     description: 'Override the git sha given from GitHub'
@@ -33,6 +37,8 @@ author: 'Taucher2003'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - bin/${{ inputs.TASK }}.rb
 branding:
   icon: check-circle
   color: orange

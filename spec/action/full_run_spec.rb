@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe 'Full run', :require_gitlab do # rubocop:disable RSpec/DescribeClass
-  subject(:execute) { GitlabPipelineAction::Entrypoint.new.execute(context) }
+  subject(:execute) { GitlabPipelineAction::Task::PipelineAction.new.execute(context) }
 
   let(:context) { GitlabPipelineAction::Context.new }
 

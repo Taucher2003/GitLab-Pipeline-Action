@@ -7,4 +7,4 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'gitlab_pipeline_action'
 
-exit GitlabPipelineAction::Entrypoint.new.execute
+exit GitlabPipelineAction::Task::PipelineAction.new.execute

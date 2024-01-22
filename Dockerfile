@@ -7,4 +7,4 @@ COPY bin/ bin/
 COPY lib/ lib/
 
 ENV BUNDLE_GEMFILE=/gitlab_pipeline_action/Gemfile
-ENTRYPOINT ["bundle", "exec", "ruby", "/gitlab_pipeline_action/bin/gitlab_pipeline_action.rb"]
+ENTRYPOINT ["bundle", "exec", "ruby"]

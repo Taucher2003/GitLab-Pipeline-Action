@@ -24,4 +24,5 @@ require 'action/step/create_output'
 
 require 'action/context'
 require 'action/pipeline_awaiter'
-require 'action/entrypoint'
+require 'action/task/base'
+require 'action/task/pipeline_action'
