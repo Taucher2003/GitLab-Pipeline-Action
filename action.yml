@@ -38,7 +38,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - bin/${{ inputs.TASK }}.rb
+    - /gitlab_pipeline_action/bin/${{ inputs.TASK }}.rb
 branding:
   icon: check-circle
   color: orange
