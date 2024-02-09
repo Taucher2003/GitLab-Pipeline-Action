@@ -18,7 +18,7 @@ module GitlabPipelineAction
     def wait!
       (MAX_DURATION / INTERVAL).times do
         case status
-        when :created, :pending, :running
+        when :created, :pending, :running, :scheduled
           print '.'
           sleep INTERVAL
         when :success
