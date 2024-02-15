@@ -43,12 +43,21 @@ module GitlabPipelineAction
     end
 
     def status
-      load_pipeline.status.to_sym
-    rescue Gitlab::Error::Error => e
-      puts "Ignoring the following error: #{e}"
-      # Ignore GitLab API hiccups. If GitLab is really down, we'll hit the job
-      # timeout anyway.
-      :running
+      retries = 0
+
+      begin
+        load_pipeline.status.to_sym
+      rescue Gitlab::Error::Error => e
+        puts "Ignoring the following error: #{e}"
+        # Ignore GitLab API hiccups. If GitLab is really down, we'll hit the job
+        # timeout anyway.
+        :running
+      rescue OpenSSL::SSL::SSLError => e
+        retries += 1
+        raise e unless retries <= 5
+
+        retry
+      end
     end
 
     private
