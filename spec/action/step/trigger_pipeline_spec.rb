@@ -56,8 +56,7 @@ RSpec.describe GitlabPipelineAction::Step::TriggerPipeline do
       it 'raises an error', :disable_console do
         expect do
           trigger
-        end.to raise_error(GitlabPipelineAction::Step::TriggerPipeline::TriggerFailed,
-                           'Failed to trigger pipeline in GitLab 5 times')
+        end.to raise_error(described_class::TriggerFailed, 'Failed to trigger pipeline in GitLab 5 times')
       end
     end
   end

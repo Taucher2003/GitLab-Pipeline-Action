@@ -55,8 +55,7 @@ RSpec.describe GitlabPipelineAction::Step::PushBranchToGitlab do
       it 'raises an error', :disable_console do
         expect do
           push
-        end.to raise_error(GitlabPipelineAction::Step::PushBranchToGitlab::PushFailed,
-                           'Failed to push to GitLab 5 times')
+        end.to raise_error(described_class::PushFailed, 'Failed to push to GitLab 5 times')
       end
     end
   end
