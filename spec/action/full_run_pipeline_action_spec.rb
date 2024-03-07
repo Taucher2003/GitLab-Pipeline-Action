@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe 'Full run', :require_gitlab do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Full run (Pipeline Action)', :require_gitlab do # rubocop:disable RSpec/DescribeClass
   subject(:execute) { GitlabPipelineAction::Task::PipelineAction.new.execute(context) }
 
   let(:context) { GitlabPipelineAction::Context.new }

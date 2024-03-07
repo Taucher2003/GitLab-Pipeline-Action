@@ -19,6 +19,10 @@ module GitlabPipelineAction
           GitlabPipelineAction::Step::CreateOutput
         ].freeze
       end
+
+      def exit_code(context)
+        context.gl_pipeline.status == 'success' ? 0 : 1
+      end
     end
   end
 end
