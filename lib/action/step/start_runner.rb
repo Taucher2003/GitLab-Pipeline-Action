@@ -5,7 +5,7 @@ module GitlabPipelineAction
     class StartRunner < Base
       RunnerInvalid = Class.new(StandardError)
 
-      GITLAB_RUNNER_IMAGE = 'gitlab/gitlab-runner:v16.9.0'
+      GITLAB_RUNNER_IMAGE = 'gitlab/gitlab-runner:v16.10.0'
 
       def execute
         runner_config_template_path = "#{File.expand_path('../config', __dir__)}/gitlab_runner_config_template.toml"
