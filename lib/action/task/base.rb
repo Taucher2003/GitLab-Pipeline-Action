@@ -21,7 +21,7 @@ module GitlabPipelineAction
           puts "#{step_class}: done (#{end_time - start_time}s)"
         end
 
-        context.gl_pipeline.status == 'success' ? 0 : 1
+        exit_code(context)
       end
     end
   end
