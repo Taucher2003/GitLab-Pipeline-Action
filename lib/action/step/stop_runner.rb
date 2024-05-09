@@ -6,7 +6,7 @@ module GitlabPipelineAction
       def execute(retries = 0)
         context.docker_runner_container.kill(signal: 'SIGQUIT')
         context.docker_runner_container.attach
-      rescue Docker::Error::TimeoutError, Docker::Error::Conflict
+      rescue Docker::Error::TimeoutError, Docker::Error::ConflictError
         # ignore
       ensure
         delete_container(retries)
@@ -14,7 +14,7 @@ module GitlabPipelineAction
 
       def delete_container(retries)
         context.docker_runner_container.delete
-      rescue Docker::Error::Conflict
+      rescue Docker::Error::ConflictError
         if retries < 3
           execute(retries + 1)
         else
