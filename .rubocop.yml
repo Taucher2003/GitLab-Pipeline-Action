@@ -20,10 +20,6 @@ RSpec/ExampleLength:
   Enabled: false
 
 # the action folder does not match gitlab_pipeline_action
-RSpec/FilePath:
-  Enabled: false
-
-# the action folder does not match gitlab_pipeline_action
 RSpec/SpecFilePathFormat:
   Enabled: false
 
