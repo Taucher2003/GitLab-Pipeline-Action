@@ -36,7 +36,7 @@ outputs:
 author: 'Taucher2003'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://ghcr.io/taucher2003/gitlab-pipeline-action:1.8.3'
   args:
     - /gitlab_pipeline_action/bin/${{ inputs.TASK }}.rb
 branding:
