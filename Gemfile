@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'gitlab', '~> 4.19'
+gem 'gitlab', '~> 5.0'
 
 gem 'git', '~> 2.0'
 
