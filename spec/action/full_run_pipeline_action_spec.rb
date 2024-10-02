@@ -62,7 +62,9 @@ RSpec.describe 'Full run (Pipeline Action)', :require_gitlab do # rubocop:disabl
       '## Job summaries',
       'job-with-summary',
       "This line should be part of the summary\n" \
-      'this one as well'
+      'this one as well',
+      'job-with-timestamps-and-summary',
+      'Summary line in timestamp job'
     )
   end
 
