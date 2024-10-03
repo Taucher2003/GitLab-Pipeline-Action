@@ -68,6 +68,30 @@ RSpec.describe GitlabPipelineAction::Step::CreateSummary do
     end
   end
 
+  context 'when jobs have a summary and timestamps are enabled' do
+    before do
+      allow(gitlab_client).to receive(:job_trace).and_return(
+        <<~TRACE
+          2024-09-27T22:55:05.708980Z 00O \e[0Ksection_start:1560896352:glpa_summary\r\e[0KTitle of the GLPA Summary
+          2024-09-27T22:55:05.708980Z 00O Content of timestamped summary
+          2024-09-27T22:55:05.708980Z 00O \e[0Ksection_end:1560896353:glpa_summary\r\e[0K
+        TRACE
+      )
+    end
+
+    it 'includes the job summary' do
+      expect(create_summary).to include(
+        <<~DESC
+          ## Job summaries
+
+          ### build
+
+          Content of timestamped summary
+        DESC
+      )
+    end
+  end
+
   context 'when no jobs have a trace' do
     before do
       allow(gitlab_client).to receive(:job_trace).and_return(nil)

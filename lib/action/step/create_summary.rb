@@ -3,6 +3,8 @@
 module GitlabPipelineAction
   module Step
     class CreateSummary < Base
+      TIMESTAMP_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z/
+
       def execute
         File.write context.gh_step_summary_path, create_summary
       end
@@ -59,9 +61,11 @@ module GitlabPipelineAction
       def extract_summary(trace)
         return if trace.nil?
 
-        lines_after_summary_start = trace.lines.map(&:strip).drop_while do |line|
-          line !~ /^\e\[0Ksection_start:\d+:glpa_summary/
-        end.drop(1)
+        lines_after_summary_start = trace.lines
+                                         .map(&:strip)
+                                         .map(&method(:remove_timestamp))
+                                         .drop_while { |line| line !~ /^\e\[0Ksection_start:\d+:glpa_summary/ }
+                                         .drop(1)
         summary_lines = lines_after_summary_start.take_while { |line| line !~ /^\e\[0Ksection_end:\d+:glpa_summary/ }
 
         if summary_lines.empty?
@@ -75,6 +79,14 @@ module GitlabPipelineAction
         context.gitlab_client
                .pipeline_jobs(context.gl_project_id, context.gl_pipeline.id)
                .map { |job| { job: job, trace: context.gitlab_client.job_trace(context.gl_project_id, job.id) } }
+      end
+
+      def remove_timestamp(line)
+        if line =~ TIMESTAMP_REGEX
+          line[32..]
+        else
+          line
+        end
       end
     end
   end

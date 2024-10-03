@@ -21,3 +21,12 @@ job-with-summary:
       echo 'this one as well'
       echo -e "\e[0Ksection_end:`date +%s`:glpa_summary\r\e[0K"
       echo 'this one not'
+
+job-with-timestamps-and-summary:
+  variables:
+    FF_TIMESTAMPS: 'true'
+  script:
+    - |
+      echo -e "\e[0Ksection_start:`date +%s`:glpa_summary\r\e[0KHeader of the section"
+      echo 'Summary line in timestamp job'
+      echo -e "\e[0Ksection_end:`date +%s`:glpa_summary\r\e[0K"
