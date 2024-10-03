@@ -43,7 +43,7 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
     steps:
-      - uses: Taucher2003/GitLab-Pipeline-Action@<version>
+      - uses: Taucher2003/GitLab-Pipeline-Action@1.9.0
         name: Run pipeline
         with:
           GL_SERVER_URL: https://gitlab.com
@@ -77,7 +77,7 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
     steps:
-      - uses: Taucher2003/GitLab-Pipeline-Action@<version>
+      - uses: Taucher2003/GitLab-Pipeline-Action@1.9.0
         name: Run pipeline
         with:
           GL_SERVER_URL: https://gitlab.com
@@ -128,7 +128,7 @@ jobs:
    pipeline:
       runs-on: ubuntu-latest
       steps:
-         - uses: Taucher2003/GitLab-Pipeline-Action@<version>
+         - uses: Taucher2003/GitLab-Pipeline-Action@1.9.0
            name: Run pipeline
            with:
               GL_SERVER_URL: https://gitlab.com
