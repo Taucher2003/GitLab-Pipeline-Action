@@ -16,7 +16,7 @@ RSpec.describe GitlabPipelineAction::Step::CreateSummary do
     allow(pipeline).to receive_messages(web_url: 'some_web_url', duration: 50, detailed_status: detailed_status, id: 1)
     allow(detailed_status).to receive(:text).and_return('Passed')
     allow(gitlab_client).to receive(:pipeline_jobs).and_return([job])
-    allow(job).to receive_messages(id: 1, name: 'build')
+    allow(job).to receive_messages(id: 1, name: 'build', web_url: 'some_job_url')
     allow(gitlab_client).to receive(:job_trace).and_return(
       <<~TRACE
         Some job output
@@ -46,7 +46,7 @@ RSpec.describe GitlabPipelineAction::Step::CreateSummary do
       <<~DESC
         ## Job summaries
 
-        ### build
+        ### [build](some_job_url)
 
         Content of the GLPA summary
       DESC
@@ -84,7 +84,7 @@ RSpec.describe GitlabPipelineAction::Step::CreateSummary do
         <<~DESC
           ## Job summaries
 
-          ### build
+          ### [build](some_job_url)
 
           Content of timestamped summary
         DESC

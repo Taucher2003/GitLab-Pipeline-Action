@@ -51,7 +51,7 @@ module GitlabPipelineAction
           next if summary.nil?
 
           <<~DESC
-            ### #{elem[:job].name}
+            ### [#{elem[:job].name}](#{elem[:job].web_url})
 
             #{summary}
           DESC
