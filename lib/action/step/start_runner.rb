@@ -11,7 +11,10 @@ module GitlabPipelineAction
         runner_config_template_path = "#{File.expand_path('../config', __dir__)}/gitlab_runner_config_template.toml"
         runner_config_template = File.read(runner_config_template_path)
 
-        Docker::Image.create('fromImage' => GITLAB_RUNNER_IMAGE)
+        unless Docker::Image.exist?(GITLAB_RUNNER_IMAGE)
+          puts "Pulling #{GITLAB_RUNNER_IMAGE}"
+          Docker::Image.create('fromImage' => GITLAB_RUNNER_IMAGE)
+        end
         container = Docker::Container.create(
           'Image' => GITLAB_RUNNER_IMAGE,
           'HostConfig' => {
