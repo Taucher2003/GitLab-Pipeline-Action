@@ -1,4 +1,5 @@
 [[runners]]
     [runners.docker]
+        pull_policy = "if-not-present"
         privileged = true
         volumes = ["/cache", "/certs/client"]
