@@ -11,10 +11,7 @@ module GitlabPipelineAction
         runner_config_template_path = "#{File.expand_path('../config', __dir__)}/gitlab_runner_config_template.toml"
         runner_config_template = File.read(runner_config_template_path)
 
-        unless Docker::Image.exist?(GITLAB_RUNNER_IMAGE)
-          puts "Pulling #{GITLAB_RUNNER_IMAGE}"
-          Docker::Image.create('fromImage' => GITLAB_RUNNER_IMAGE)
-        end
+        pull_image unless Docker::Image.exist?(GITLAB_RUNNER_IMAGE)
         container = Docker::Container.create(
           'Image' => GITLAB_RUNNER_IMAGE,
           'HostConfig' => {
@@ -56,6 +53,19 @@ module GitlabPipelineAction
 
       def skip?
         context.gl_runner_token.nil?
+      end
+
+      private
+
+      def pull_image
+        remaining_attempts = 5
+        begin
+          puts "Pulling #{GITLAB_RUNNER_IMAGE} (remaining attempts: #{remaining_attempts})"
+          Docker::Image.create('fromImage' => GITLAB_RUNNER_IMAGE)
+        rescue Docker::Error::DockerError => e
+          puts e.full_message(order: :top)
+          retry if (remaining_attempts -= 1).positive?
+        end
       end
     end
   end
