@@ -20,6 +20,7 @@ jobs:
       - run: GITLAB_CE_VERSION=${{ matrix.gitlab_version }} docker compose up -d
         working-directory: test
       - run: test/await_healthy.sh
+        timeout-minutes: 10
       - uses: ./
         name: Run smoke-test (running the action)
         with:
