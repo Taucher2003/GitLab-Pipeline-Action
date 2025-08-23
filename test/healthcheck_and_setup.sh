@@ -42,13 +42,15 @@ test -f $done || {
     printf 'import_url: "https://github.com/Taucher2003/Gitlab-Pipeline-Action.git"'
     printf '}).execute;'
 
-    printf 'Ci::Runners::CreateRunnerService.new('
+    printf 'runner = Ci::Runners::CreateRunnerService.new('
     printf 'user: User.first,'
     printf 'params: {'
-    printf 'runner_type: "instance_type",'
-    printf 'token: "some_long_runner_token"'
+    printf 'runner_type: "instance_type"'
     printf '}'
-    printf ').execute;'
+    printf ').execute.payload[:runner];'
+
+    printf 'runner.set_token("some_long_runner_token");'
+    printf 'runner.save!;'
 
     printf 'Ci::ChangeVariableService.new('
     printf 'container: Project.find(1000),'
