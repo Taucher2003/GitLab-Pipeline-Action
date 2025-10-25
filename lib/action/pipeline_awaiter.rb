@@ -7,7 +7,7 @@ module GitlabPipelineAction
     PipelineTimedOut = Class.new(PipelineFinishedUnsuccessful)
 
     INTERVAL = 10 # seconds
-    MAX_DURATION = 3600 * 3 # 3 hours
+    MAX_DURATION = ((5 * 60) + 30) * 3600 # 5 hours, 30 mins
 
     def initialize(pipeline, gitlab_client)
       @pipeline = pipeline

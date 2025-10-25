@@ -6,7 +6,7 @@ module GitlabPipelineAction
       PipelinesTimedOut = Class.new(StandardError)
 
       INTERVAL = 10 # seconds
-      MAX_DURATION = 3600 * 3 # 3 hours
+      MAX_DURATION = ((5 * 60) + 30) * 60 # 5 hours, 30 mins
 
       attr_reader :start_time
 
