@@ -21,6 +21,14 @@ jobs:
         working-directory: test
       - run: test/await_healthy.sh
         timeout-minutes: 10
+      - name: Wait for image build to succeed
+        uses: lewagon/wait-on-check-action@v1.4.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Build Image'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          allowed-conclusions: success
+        if: ${{ github.ref_type == 'tag' }}
       - uses: ./
         name: Run smoke-test (running the action)
         with:

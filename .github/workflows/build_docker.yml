@@ -4,17 +4,33 @@ on:
   push:
     tags:
       - '*'
+  pull_request:
 
 permissions:
   packages: write
 
 jobs:
   build:
+    name: Build Image
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v5
-      - run: docker build -t ghcr.io/taucher2003/gitlab-pipeline-action:${{ github.ref_name }} .
+      - run: docker context create build-context
+      - run: >-
+          docker buildx create
+          --name container-builder
+          --driver docker-container
+          --bootstrap
+          --use
+          build-context
+      - run: docker run --privileged --rm tonistiigi/binfmt --install all
       - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $ --password-stdin ghcr.io
         name: Login to registry
-      - run: docker push ghcr.io/taucher2003/gitlab-pipeline-action:${{ github.ref_name }}
+        if: ${{ github.ref_type == 'tag' }}
+      - run: >-
+          docker buildx build 
+          -t ghcr.io/taucher2003/gitlab-pipeline-action:${{ github.ref_type == 'tag' && github.ref_name || 'ci' }}
+          --platform linux/amd64,linux/arm64
+          ${{ github.ref_type == 'tag' && '--push' || '' }}
+          .
