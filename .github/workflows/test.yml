@@ -16,7 +16,7 @@ jobs:
           - 18.3.4-ce.0
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: GITLAB_CE_VERSION=${{ matrix.gitlab_version }} docker compose up -d
         working-directory: test
       - run: test/await_healthy.sh
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
       - run: bundle install
       - run: bundle exec rubocop
