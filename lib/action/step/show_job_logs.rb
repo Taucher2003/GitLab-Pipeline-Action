@@ -16,6 +16,7 @@ module GitlabPipelineAction
 
         jobs = context.gitlab_client
                       .pipeline_jobs(context.gl_project_id, context.gl_pipeline.id)
+                      .auto_paginate
                       .select(&VARIANTS[context.gl_show_job_logs])
                       .sort_by { |job| job.id.to_i }
 
