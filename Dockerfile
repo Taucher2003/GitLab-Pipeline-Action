@@ -1,4 +1,4 @@
-FROM ruby:3.2.2
+FROM ruby:4.0.0
 
 WORKDIR /gitlab_pipeline_action
 COPY Gemfile Gemfile.lock ./
