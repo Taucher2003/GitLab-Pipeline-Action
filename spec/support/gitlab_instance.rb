@@ -9,7 +9,7 @@ RSpec.configure do |config|
   end
 
   begin
-    puts Gitlab.version.to_h
+    puts Gitlab.version.to_h # rubocop:disable RSpec/Output
   rescue Errno::ECONNREFUSED
     gitlab_not_running = true
   end

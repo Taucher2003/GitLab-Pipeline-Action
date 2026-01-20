@@ -28,12 +28,14 @@ RSpec.configure do |config|
     $stderr = original_stderr
 
     if ENV['CI']
+      # rubocop:disable RSpec/Output
       GitlabPipelineAction::Helper::Github.with_group "#{example_description} (stdout)" do
         puts File.read "#{tmp_dir}/stdout"
       end
       GitlabPipelineAction::Helper::Github.with_group "#{example_description} (stderr)" do
         puts File.read "#{tmp_dir}/stderr"
       end
+      # rubocop:enable RSpec/Output
     end
   end
 end
