@@ -6,19 +6,20 @@ module GitlabPipelineAction
       def execute(context = Context.new)
         steps.each do |step_class|
           step = step_class.new(context)
-          print "#{step_class}: "
+          $stdout.print "#{step_class}: "
 
           if step.skip?
-            puts 'skipped'
+            $stdout.puts 'skipped'
             next
           end
-          puts 'starting'
+          $stdout.puts 'starting'
+          $stdout.flush
 
           start_time = Time.now.to_i
           step.execute
           end_time = Time.now.to_i
 
-          puts "#{step_class}: done (#{end_time - start_time}s)"
+          $stdout.puts "#{step_class}: done (#{end_time - start_time}s)"
         end
 
         exit_code(context)
