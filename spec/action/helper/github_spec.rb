@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe GitlabPipelineAction::Helper::Github do
+  # rubocop:disable RSpec/Output
   it '#warning writes the correct format' do
     expect do
       described_class.warning('Some warning message')
@@ -36,4 +37,5 @@ RSpec.describe GitlabPipelineAction::Helper::Github do
       "::Some random value::\n"
     ).to_stdout
   end
+  # rubocop:enable RSpec/Output
 end
