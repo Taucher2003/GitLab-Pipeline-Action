@@ -22,7 +22,7 @@ jobs:
       - run: test/await_healthy.sh
         timeout-minutes: 10
       - name: Wait for image build to succeed
-        uses: lewagon/wait-on-check-action@v1.4.1
+        uses: lewagon/wait-on-check-action@v1.5.0
         with:
           ref: ${{ github.ref }}
           check-name: 'Build Image'
