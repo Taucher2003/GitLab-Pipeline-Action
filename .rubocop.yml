@@ -26,6 +26,9 @@ RSpec/SpecFilePathFormat:
 Style/Documentation:
   Enabled: false
 
+Style/EmptyClassDefinition:
+  Enabled: false
+
 Style/HashSyntax:
   EnforcedShorthandSyntax: never
 
