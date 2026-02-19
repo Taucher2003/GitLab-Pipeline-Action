@@ -78,6 +78,7 @@ module GitlabPipelineAction
       def job_traces
         context.gitlab_client
                .pipeline_jobs(context.gl_project_id, context.gl_pipeline.id)
+               .auto_paginate
                .map { |job| { job: job, trace: context.gitlab_client.job_trace(context.gl_project_id, job.id) } }
       end
 

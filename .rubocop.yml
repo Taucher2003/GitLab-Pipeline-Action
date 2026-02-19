@@ -19,6 +19,9 @@ Naming/MethodParameterName:
 RSpec/ExampleLength:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 # the action folder does not match gitlab_pipeline_action
 RSpec/SpecFilePathFormat:
   Enabled: false
