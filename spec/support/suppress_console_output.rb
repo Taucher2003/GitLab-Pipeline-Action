@@ -11,11 +11,8 @@ RSpec.configure do |config|
     tmp_dir = File.expand_path("../../tmp/spec/logs/#{example_log_path}", __dir__)
     FileUtils.mkdir_p tmp_dir
 
-    # rubocop:disable Style/FileOpen -- these files are closed in the ensure block below
     $stdout = File.open("#{tmp_dir}/stdout", 'w')
     $stderr = File.open("#{tmp_dir}/stderr", 'w')
-    # rubocop:enable Style/FileOpen
-
     example.run
 
     begin
