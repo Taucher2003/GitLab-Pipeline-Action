@@ -17,6 +17,9 @@ inputs:
     description: 'Set if the job log should be shown in the action output'
     default: 'none'
 
+  GH_TOKEN:
+    description: 'A GitHub token for cloning private repositories'
+
   TASK:
     description: 'Specify the task to run'
     default: 'gitlab_pipeline_action'
