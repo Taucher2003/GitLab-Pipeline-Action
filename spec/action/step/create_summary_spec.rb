@@ -103,4 +103,137 @@ RSpec.describe GitlabPipelineAction::Step::CreateSummary do
       expect(create_summary).not_to include('Job summaries')
     end
   end
+
+  describe 'job trace retry behaviour' do
+    subject(:create_summary_instance) { described_class.new(context) }
+
+    let(:fake_response) { instance_double(HTTParty::Response) }
+    let(:fake_request) { instance_double(HTTParty::Request) }
+
+    before do
+      allow(fake_response).to receive_messages(headers: { 'content-type' => 'text/plain' }, to_s: '', code: 500,
+                                               request: fake_request, body: 'Internal Server Error')
+      allow(fake_request).to receive_messages(base_uri: '', path: '')
+      allow_any_instance_of(described_class).to receive(:sleep) # rubocop:disable RSpec/AnyInstance
+    end
+
+    context 'when job_trace succeeds on first attempt' do
+      before do
+        allow(gitlab_client).to receive(:job_trace).and_return('trace output')
+      end
+
+      it 'returns the trace without retrying' do
+        create_summary_instance.create_summary
+        expect(gitlab_client).to have_received(:job_trace).once
+      end
+    end
+
+    context 'when job_trace fails with a retryable error then succeeds' do
+      before do
+        call_count = 0
+        allow(gitlab_client).to receive(:job_trace) do
+          call_count += 1
+          raise Gitlab::Error::InternalServerError, fake_response if call_count < 3
+
+          'trace output'
+        end
+      end
+
+      it 'retries and returns the trace' do
+        create_summary_instance.create_summary
+        expect(gitlab_client).to have_received(:job_trace).exactly(3).times
+      end
+    end
+
+    context 'when job_trace fails with BadGateway then succeeds' do
+      before do
+        call_count = 0
+        allow(gitlab_client).to receive(:job_trace) do
+          call_count += 1
+          raise Gitlab::Error::BadGateway, fake_response if call_count == 1
+
+          'trace output'
+        end
+      end
+
+      it 'retries and returns the trace' do
+        create_summary_instance.create_summary
+        expect(gitlab_client).to have_received(:job_trace).twice
+      end
+    end
+
+    context 'when job_trace fails with ServiceUnavailable then succeeds' do
+      before do
+        call_count = 0
+        allow(gitlab_client).to receive(:job_trace) do
+          call_count += 1
+          raise Gitlab::Error::ServiceUnavailable, fake_response if call_count == 1
+
+          'trace output'
+        end
+      end
+
+      it 'retries and returns the trace' do
+        create_summary_instance.create_summary
+        expect(gitlab_client).to have_received(:job_trace).twice
+      end
+    end
+
+    context 'when job_trace fails with ConnectionTimedOut then succeeds' do
+      before do
+        call_count = 0
+        allow(gitlab_client).to receive(:job_trace) do
+          call_count += 1
+          raise Gitlab::Error::ConnectionTimedOut, fake_response if call_count == 1
+
+          'trace output'
+        end
+      end
+
+      it 'retries and returns the trace' do
+        create_summary_instance.create_summary
+        expect(gitlab_client).to have_received(:job_trace).twice
+      end
+    end
+
+    context 'when job_trace fails with a retryable error more than the max attempts' do
+      before do
+        allow(gitlab_client).to receive(:job_trace).and_raise(Gitlab::Error::InternalServerError, fake_response)
+      end
+
+      it 'raises the error after exhausting retries' do
+        expect { create_summary_instance.create_summary }.to raise_error(Gitlab::Error::InternalServerError)
+      end
+
+      it 'attempts the configured number of retries' do
+        begin
+          create_summary_instance.create_summary
+        rescue Gitlab::Error::InternalServerError
+          # expected
+        end
+
+        expect(gitlab_client).to have_received(:job_trace).exactly(6).times
+      end
+    end
+
+    context 'when job_trace fails with a non-retryable error' do
+      before do
+        allow(gitlab_client).to receive(:job_trace).and_raise(Gitlab::Error::NotFound, fake_response)
+      end
+
+      it 'raises immediately without retrying' do
+        expect { create_summary_instance.create_summary }.to raise_error(Gitlab::Error::NotFound)
+      end
+
+      it 'does not retry' do
+        begin
+          create_summary_instance.create_summary
+        rescue Gitlab::Error::NotFound
+          # expected
+        end
+
+        expect(gitlab_client).to have_received(:job_trace).once
+      end
+    end
+  end
 end

@@ -7,6 +7,13 @@ module GitlabPipelineAction
         all: ->(_) { true },
         failures: ->(job) { job.status == 'failed' },
       }.freeze
+      JOB_TRACE_RETRY_ATTEMPTS = 5
+      RETRY_ON_ERRORS = [
+        Gitlab::Error::InternalServerError,
+        Gitlab::Error::BadGateway,
+        Gitlab::Error::ServiceUnavailable,
+        Gitlab::Error::ConnectionTimedOut
+      ].freeze
 
       def execute
         unless VARIANTS.key?(context.gl_show_job_logs)
@@ -23,9 +30,23 @@ module GitlabPipelineAction
         jobs.each do |job|
           github.with_group "'#{job.name}' in stage '#{job.stage}' (#{job.status})" do
             github.stop_commands do
-              puts context.gitlab_client.job_trace(context.gl_project_id, job.id)
+              puts job_trace(job.id)
             end
           end
+        end
+      end
+
+      def job_trace(job_id)
+        attempt = 0
+
+        begin
+          attempt += 1
+          context.gitlab_client.job_trace(context.gl_project_id, job_id)
+        rescue *RETRY_ON_ERRORS => e
+          raise e if attempt > JOB_TRACE_RETRY_ATTEMPTS
+
+          sleep 1
+          retry
         end
       end
 

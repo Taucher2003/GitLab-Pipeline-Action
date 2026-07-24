@@ -4,6 +4,13 @@ module GitlabPipelineAction
   module Step
     class CreateSummary < Base
       TIMESTAMP_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z/
+      JOB_TRACE_RETRY_ATTEMPTS = 5
+      RETRY_ON_ERRORS = [
+        Gitlab::Error::InternalServerError,
+        Gitlab::Error::BadGateway,
+        Gitlab::Error::ServiceUnavailable,
+        Gitlab::Error::ConnectionTimedOut
+      ].freeze
 
       def execute
         File.write context.gh_step_summary_path, create_summary
@@ -79,7 +86,21 @@ module GitlabPipelineAction
         context.gitlab_client
                .pipeline_jobs(context.gl_project_id, context.gl_pipeline.id)
                .auto_paginate
-               .map { |job| { job: job, trace: context.gitlab_client.job_trace(context.gl_project_id, job.id) } }
+               .map { |job| { job: job, trace: job_trace(job.id) } }
+      end
+
+      def job_trace(job_id)
+        attempt = 0
+
+        begin
+          attempt += 1
+          context.gitlab_client.job_trace(context.gl_project_id, job_id)
+        rescue *RETRY_ON_ERRORS => e
+          raise e if attempt > JOB_TRACE_RETRY_ATTEMPTS
+
+          sleep 1
+          retry
+        end
       end
 
       def remove_timestamp(line)
