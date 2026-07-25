@@ -26,6 +26,8 @@ RSpec.describe GitlabPipelineAction::Step::TriggerPipeline do
       fake_pipeline = double
       allow(fake_pipeline).to receive(:web_url).and_return('')
 
+      allow_any_instance_of(described_class).to receive(:sleep) # rubocop:disable RSpec/AnyInstance
+
       iteration = 0
       allow(gitlab_client).to receive(:create_pipeline) do
         iteration += 1
