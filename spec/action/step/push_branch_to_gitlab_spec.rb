@@ -9,11 +9,11 @@ RSpec.describe GitlabPipelineAction::Step::PushBranchToGitlab do
   let(:instance) { described_class.new(context) }
 
   context 'when pushes fail' do
-    let(:git) { instance_double(Git::Base) }
+    let(:git) { instance_double(Git::Repository) }
     let(:failing_retries) { 4 }
 
     before do
-      allow(git).to receive(:add_remote)
+      allow(git).to receive(:remote_add)
       allow(git).to receive(:push)
 
       fake_response = instance_double(HTTParty::Response)

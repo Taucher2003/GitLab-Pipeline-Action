@@ -7,7 +7,7 @@ RSpec.describe GitlabPipelineAction::Step::CloneProject do
 
   let(:context) { GitlabPipelineAction::Context.new }
   let(:instance) { described_class.new(context) }
-  let(:git) { instance_double(Git::Base) }
+  let(:git) { instance_double(Git::Repository) }
 
   before do
     context.gh_server_url = 'https://github.com'

@@ -7,7 +7,7 @@ module GitlabPipelineAction
       MAX_PUSH_RETRIES = 5
 
       def execute
-        context.git_repository.add_remote(GITLAB_REMOTE, gitlab_remote_url)
+        context.git_repository.remote_add(GITLAB_REMOTE, gitlab_remote_url)
 
         MAX_PUSH_RETRIES.times do |iteration|
           context.git_repository.push(GITLAB_REMOTE, context.gl_branch_name, push_option: ['ci.skip'])
