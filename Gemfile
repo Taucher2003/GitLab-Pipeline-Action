@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gem 'gitlab', '~> 6.0'
 
-gem 'git', '~> 4.0'
+gem 'git', '~> 5.0'
 
 gem 'docker-api', '~> 2.2'
 
