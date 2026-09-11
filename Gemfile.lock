@@ -28,10 +28,10 @@ GEM
       multi_json
     drb (2.2.3)
     excon (0.112.0)
-    git (5.1.0)
+    git (5.5.0)
       activesupport (>= 5.0)
       addressable (~> 2.8)
-      process_executer (~> 4.0)
+      process_executer (~> 4.1)
       rchardet (~> 1.9)
     gitlab (6.1.0)
       base64
@@ -59,7 +59,7 @@ GEM
       ast (~> 2.4.1)
       racc
     prism (1.9.0)
-    process_executer (4.0.4)
+    process_executer (4.1.1)
       track_open_instances (~> 0.1)
     public_suffix (7.0.5)
     racc (1.8.1)
