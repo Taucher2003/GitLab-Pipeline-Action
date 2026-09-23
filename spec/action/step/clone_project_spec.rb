@@ -19,7 +19,7 @@ RSpec.describe GitlabPipelineAction::Step::CloneProject do
     allow(Git).to receive(:clone).and_return(git)
     allow(git).to receive(:fetch)
     allow(git).to receive(:checkout)
-    allow(git).to receive(:branch).and_return(instance_double(Git::Branch, checkout: nil))
+    allow(git).to receive(:branch_new)
   end
 
   context 'without GH_TOKEN' do
