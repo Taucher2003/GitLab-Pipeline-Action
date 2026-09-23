@@ -8,7 +8,7 @@ module GitlabPipelineAction
 
         context.git_repository.fetch('origin', ref: context.gh_ref)
         context.git_repository.checkout(context.gh_sha)
-        context.git_repository.branch(context.gl_branch_name).checkout
+        context.git_repository.branch_new(context.gl_branch_name)
       end
 
       private
