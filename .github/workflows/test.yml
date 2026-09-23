@@ -11,9 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         gitlab_version:
-          - 19.3.0-ce.0
-          - 19.2.4-ce.0
-          - 19.1.6-ce.0
+          - 19.4.1-ce.0
+          - 19.3.3-ce.0
+          - 19.2.7-ce.0
 
     steps:
       - uses: actions/checkout@v7
