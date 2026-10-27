@@ -23,9 +23,9 @@ GEM
     connection_pool (3.0.2)
     csv (3.3.5)
     diff-lcs (1.5.1)
-    docker-api (2.4.0)
+    docker-api (2.5.0)
+      base64
       excon (>= 0.64.0)
-      multi_json
     drb (2.2.3)
     excon (0.112.0)
     git (5.6.0)
@@ -51,7 +51,6 @@ GEM
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
-    multi_json (1.15.0)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     parallel (1.28.0)
