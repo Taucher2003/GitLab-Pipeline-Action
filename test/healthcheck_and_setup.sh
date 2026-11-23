@@ -28,10 +28,15 @@ test -f $done || {
     printf "token.set_token('TEST1234567890123456');"
     printf 'token.save!;'
 
-    printf 'settings = ApplicationSetting.current;'
+    printf 'settings = ::Gitlab::CurrentSettings.current_application_settings;'
     printf 'settings.import_sources << "git";'
     printf 'settings.save!;'
+    printf '::Gitlab::CurrentSettings.expire_current_application_settings;'
+  ) | gitlab-rails console
 
+  gitlab-ctl restart sidekiq
+
+  (
     printf 'project = Projects::CreateService.new(User.find(1), {'
     printf 'namespace_id: User.first.namespace.id,'
     printf 'name: "Test",'
